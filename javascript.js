@@ -2,58 +2,92 @@ console.log("Welcome to ROCK PAPER SCISSORS!");
 
 let playerSelection = null;
 let computerSelection = null;
-let playerScore = 0;
+let wins = 0;
+let losses = 0;
 
-function computerSelect() {
-    let randomnum = Math.floor(Math.random() * 3);
-    if (randomnum === 0) {
-        computerSelection = "Rock";
-    }
-    else if (randomnum === 1) {
-        computerSelection = "Paper";
-    }
-    else {
-        computerSelection = "Scissors";
-    }
-}
+const opponent = document.querySelector('#opponent');
+const wr = document.querySelector('#wl');
+
 
 function playRound() {
-    playerSelection = prompt("Enter your choice: Rock, Paper or Scissors");
-    computerSelect();
-    console.log("Computer chose: " + computerSelection);
-    console.log("You chose: " + playerSelection);
-    if (playerSelection === computerSelection) {
-        return "It's a tie!";
-    }
-    else if (playerSelection === "Rock") {
-        if (computerSelection === "Paper") {
-            return "You lose! Paper beats Rock!";
-        }
-        else {playerScore++;
-            return "You win! Rock beats Scissors!";
+    let i = 0;
+    let computerSelection;
+
+    function iterate() {
+        if (i < 3) {
+            let randomnum = Math.floor(Math.random() * 3);
             
+            if (randomnum === 0) {
+                computerSelection = "Rock";
+            } else if (randomnum === 1) {
+                computerSelection = "Paper";
+            } else {
+                computerSelection = "Scissors";
+            }
+            
+            console.log(computerSelection);
+            opponent.textContent = "computer is choosing... " + computerSelection;
+            
+            i++;
+            setTimeout(iterate, 1000); 
+        } else {
+            opponent.textContent = "Computer chose: " + computerSelection;
+            console.log("Computer chose: " + computerSelection);
+            console.log("You chose: " + playerSelection);
+            if (playerSelection === computerSelection) {
+                console.log("It's a tie!");
+            }
+            else if (playerSelection === "Rock") {
+                if (computerSelection === "Paper") {
+                    losses++;
+                    console.log("You lose! Paper beats Rock!");
+                } else {
+                    wins++;
+                    console.log("You win! Rock beats Scissors!");
+                }
+            }
+            else if (playerSelection === "Paper") {
+                if (computerSelection === "Scissors") {
+                    losses++;
+                    console.log("You lose! Scissors beats Paper!");
+                } else {
+                    wins++;
+                    console.log("You win! Paper beats Rock!");
+                }
+            }
+            else {
+                if (computerSelection === "Rock") {
+                    losses++;
+                    console.log("You lose! Rock beats Scissors!");
+                } else {
+                    wins++;
+                    console.log("You win! Scissors beats Paper!");
+                }
+            }
+            
+            wr.textContent = "Wins: " + wins + " Losses: " + losses;
         }
     }
-    else if (playerSelection === "Paper") {
-        if (computerSelection === "Scissors") {
-            return "You lose! Scissors beats Paper!";
-        }
-        else {playerScore++;
-            return "You win! Paper beats Rock!"; 
-        }
-    }
-    else {
-        if (computerSelection === "Rock") {
-            return "You lose! Rock beats Scissors!";
-        }
-        else {playerScore++;
-            return "You win! Scissors beats Paper!"; 
-        }
-    }
+    iterate();
+
 }
-while(playerScore < 5) {
-    let result = playRound();
-    console.log(result);
-    console.log("Your score: " + playerScore);
-}
-console.log("Game Over! Your final score: " + playerScore);
+
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
+
+rock.addEventListener('click', () => {
+    playerSelection = "Rock";
+    playRound();
+});
+
+paper.addEventListener('click', () => {
+    playerSelection = "Paper";
+    playRound();
+});
+
+scissors.addEventListener('click', () => {
+    playerSelection = "Scissors";
+    playRound();
+});
+

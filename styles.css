@@ -1,0 +1,22 @@
+body{
+    background-color: rgb(255, 247, 236);
+    font-family: proxima-nova, sans-serif;
+}
+h1{
+    text-align: center;
+    font-size: 2.5em;
+    margin-top: 0;
+    padding-top: 20px;
+}
+.gameMaster {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}
+.player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}
